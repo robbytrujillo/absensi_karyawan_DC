@@ -1,26 +1,57 @@
+<table border="1">
+  <tr>
+    <th>Tanggal</th>
+    <th>Jam Masuk</th>
+    <th>Jam Keluar</th>
+    <th>Performa</th>
+  </tr>
+
 <?php
 include("../connection.php");
-//session_start();
 
 date_default_timezone_set("Asia/Jakarta"); //GMT +07
 
 $tgl = date('Y-m-d');
-$clock_in = date('H:i:s');
-
+$time = date('H:i:s');
 $employe_id = $_SESSION['employe_id'];
 
-if (isset($_POST['absen'])) {
-    $sql = "INSERT INTO attendaces (id, employe_id, tgl, clock_in, clock_out) 
-    VALUES (NULL, $employe_id, '$tgl', '$clock_in', NULL)";
+$sql = "SELECT * FROM attendaces WHERE employe_id=$employe_id";
+$result = $db->query($sql);
 
+while ($row = $result->fetch_assoc()) {
+  echo "<tr>";
+  echo "<td>" . $row['tgl'] . "</td>";
+  echo "<td>" . $row['clock_in'] . "</td>";
 
-    $result = $db->query($sql);
-
-    if ($result === TRUE) {
-        echo "BERHASIL ABSEN";
-    } else {
-        echo "GAGAL ABSEN";
-    }
+  if (empty($row['clock_out']) && !empty($row['clock_in']) && $tgl == $row['tgl']) {
+    echo "<td>
+    <form action='' method='POST' onsubmit='return alert(`terimakasih sudah bekerja hari ini`)'>
+      <button type='submit' name='keluar'>KELUAR</button>
+    </form>
+    </td>";
+  } else {
+    echo "<td>" . $row['clock_out'] . "</td>";
+  }
+  echo "<td>😂</td>";
+  echo "</tr>";
 }
+?>
+</table>
 
+<form action="action.php" method="POST">
+  <button type="submit" name="absen">ABSEN SEKARANG</button>
+</form>
+
+<?php
+if (isset($_POST['keluar'])) {
+  $update = "UPDATE attendaces SET clock_out='$time' WHERE employe_id=$employe_id AND tgl='$tgl'";
+
+  $clock_out = $db->query($update);
+  if ($clock_out === TRUE) {
+    session_start();
+    session_destroy();
+    header("location:../index.php");
+  }
+
+}
 ?>

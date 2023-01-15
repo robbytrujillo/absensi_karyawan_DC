@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION["status"]) && $_SESSION['status'] == "login") {
+    header("location:dashboard/index.php");
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +22,8 @@
     <div class="container">
         <section class="wrapper">
             <h3 class="title">LOGIN SYSTEM</h3>
+
+            <!-- notifikasi -->
             <?php
             if (isset($_GET['message'])) {
                 $msg = $_GET['message'];

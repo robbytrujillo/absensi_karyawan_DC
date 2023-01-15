@@ -29,8 +29,12 @@ if (isset($_POST['login'])) {
                 $_SESSION['fullname'] = $row['fullname'];
                 $_SESSION['role'] = $row['role'];
             }
-            
-            header("location:dashboard/index.php");
+            if ($row['role'] == 'admin') {
+                header("location:dashboard/index-admin.php");
+            } else {
+                header("location:dashboard/index.php");
+            }
+
         } else {
             header("location:index.php?message=user dan password gagal!!");
         }
