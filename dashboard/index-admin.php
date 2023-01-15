@@ -1,6 +1,6 @@
 <?php
 
-echo "Hai admin!!";
+echo "Hai, saya admin!!";
 
 ?>
 

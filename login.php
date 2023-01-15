@@ -10,7 +10,7 @@ if (isset($_POST['login'])) {
 
     if (strlen($_POST['nip']) <= 2 || strlen($_POST['password']) <= 2) {
         //echo "testing";
-        header("location:index.php?message=data tidak valid");
+        header("location:index.php?message=data yang anda inputkan tidak valid");
     } else {
         // echo "aman";
         $user->set_login_data($_POST['nip'], $_POST['password']);
@@ -29,7 +29,7 @@ if (isset($_POST['login'])) {
                 $_SESSION['fullname'] = $row['fullname'];
                 $_SESSION['role'] = $row['role'];
             }
-            if ($row['role'] == 'admin') {
+            if ($_SESSION['role'] == 'admin') {
                 header("location:dashboard/index-admin.php");
             } else {
                 header("location:dashboard/index.php");

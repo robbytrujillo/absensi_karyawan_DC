@@ -6,7 +6,6 @@ if (isset($_SESSION["status"]) && $_SESSION['status'] == "login") {
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +29,7 @@ if (isset($_SESSION["status"]) && $_SESSION['status'] == "login") {
                 echo "<div class='notif-login'>$msg</div>";
             }
             ?>
+
             <div>
                 <form action="login.php" method="POST" class="form-login">
                     <label>masukan nomor induk</label>

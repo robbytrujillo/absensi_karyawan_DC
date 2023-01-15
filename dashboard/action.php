@@ -10,7 +10,8 @@ $clock_in = date('H:i:s');
 
 if (isset($_POST['absen'])) {
 
-    $check_absensi = "SELECT tgl FROM attendaces WHERE employe_id = $employe_id";
+    $check_absensi = "SELECT tgl FROM attendaces WHERE employe_id = $employe_id AND tgl='$tgl'";
+    
     $check = $db->query($check_absensi);
 
     if ($check->num_rows > 0) {
